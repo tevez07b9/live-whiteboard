@@ -1,13 +1,11 @@
 import { getUser } from '@/utils'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useToast } from '@/hooks/use-toast'
 import Canvas from '@/components/canvas'
 import { CanvasProvider } from '@/context/canvas-context'
 
 const RoomPage = () => {
   const { roomId } = useParams<{ roomId: string }>()
-  const { toast } = useToast()
   const [ws, setWs] = useState<WebSocket | null>(null)
 
   useEffect(() => {
@@ -27,18 +25,6 @@ const RoomPage = () => {
       )
     }
 
-    socket.onmessage = (message) => {
-      const { event, data } = JSON.parse(message.data)
-      if (event === 'user-joined') {
-        // Show toast notification for other users joining
-        toast({
-          title: 'New User Joined',
-          description: `${data.username} has joined the room.`,
-          duration: 3000,
-        })
-      }
-    }
-
     setWs(socket)
 
     // Cleanup on unmount
@@ -46,7 +32,7 @@ const RoomPage = () => {
       socket.close()
       setWs(null)
     }
-  }, [roomId, toast])
+  }, [roomId])
 
   return (
     <div className="flex w-full min-h-screen p-4">

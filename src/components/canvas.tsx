@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Toolbar from './toolbar'
 import { useCanvas } from '@/context/canvas-context'
 import { Tool } from '@/types'
+import { useToast } from '@/hooks/use-toast'
 
 type CanvasProps = {
   socket: WebSocket | null
@@ -25,6 +26,7 @@ type DrawEvent = {
 
 const Canvas = ({ socket, roomId }: CanvasProps) => {
   const { brushColor, brushSize, eraserSize, tool } = useCanvas()
+  const { toast } = useToast()
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const canvasContainerRef = useRef<HTMLDivElement | null>(null)
@@ -66,6 +68,15 @@ const Canvas = ({ socket, roomId }: CanvasProps) => {
 
     socket.onmessage = (message) => {
       const { event, data } = JSON.parse(message.data)
+
+      if (event === 'user-joined') {
+        // Show toast notification for other users joining
+        toast({
+          title: 'New User Joined',
+          description: `${data.username} has joined the room.`,
+          duration: 3000,
+        })
+      }
 
       if (event === 'draw') {
         drawOnCanvas(data)
