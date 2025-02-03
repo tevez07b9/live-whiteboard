@@ -1,50 +1,108 @@
-# React + TypeScript + Vite
+# 🖊️ Live Collaboration Whiteboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **real-time, multiplayer** whiteboard that lets users draw, erase and collaborate seamlessly—just like Figma! Built using **React, WebSockets, and Node.js**, with deployment on **AWS EC2** for both frontend and backend.
 
-Currently, two official plugins are available:
+🚀 **Try it live:** [here](http://13.53.193.93/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📸 Preview Video
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+[here](https://tevez07b9.github.io/tevez07b9/public/live-board.webm)
 
-- Configure the top-level `parserOptions` property like this:
+## ✨ Features
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+✅ **Real-time drawing & erasing** with brush size & color selection  
+✅ **Undo / Redo & Persistent Drawings** – so no work is lost!  
+✅ **WebSocket-powered fast sync** across all users  
+✅ **Fully deployed on AWS (Frontend + Backend)**
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+
+- React + TypeScript + Vite
+- WebSockets (`ws`)
+- TailwindCSS + Shadcn UI
+- HTML5 Canvas for drawing
+
+**Backend:**
+
+- Node.js + Express
+- `ws` for WebSockets
+- Hosted on AWS EC2 (Nginx for reverse proxy)
+
+---
+
+## 🚀 Setup & Run Locally
+
+### 1️⃣ Clone the frontend and backend repos
+
+```sh
+git clone https://github.com/tevez07b9/live-whiteboard.git client
+git clone https://github.com/tevez07b9/web-sockets-backend.git backend
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2️⃣ Install dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Install frontend
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+cd client
+npm install
 ```
+
+### Install backend
+
+```sh
+cd ../backend
+npm install
+```
+
+### 3️⃣ Run the backend
+
+```sh
+cd backend
+npm run dev
+```
+
+### 4️⃣ Run the frontend
+
+First duplicate the `.env.example` file
+Your backend will run on port 5000 so the content wil be
+
+```
+VITE_API_URL=http://localhost:5000
+VITE_SOCKET_URL=ws://localhost:5000
+```
+
+Then run the frontend
+
+```sh
+cd ../client
+npm run dev
+
+```
+
+## 🌍 Deployment (AWS + Nginx)
+
+- Frontend deployed on EC2 (Nginx serving Vite build)
+- Backend deployed on EC2 (Node.js + WebSockets)
+- WebSockets & REST API secured with Nginx reverse proxy
+
+## 💡 Future Enhancements
+
+- 🚀 Save drawings as images (PNG, SVG, PDF)
+- 🚀 Add voice/video chat for better collaboration
+- 🚀 Implement layers (like Photoshop!)
+- 🚀 Support gesture-based drawing (touchscreens)
+
+## 💙 Contributing
+
+Pull requests are welcome! If you find a bug or have an idea, create an issue or open a PR.
+
+## 📝 License
+
+MIT License. Feel free to use and improve!
